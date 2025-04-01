@@ -1,2 +1,0 @@
-# inDiscovery
-JavaScript Website Project
