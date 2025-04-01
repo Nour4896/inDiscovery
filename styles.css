@@ -1,0 +1,25 @@
+html {
+    background:
+    conic-gradient(at 10% 50%,#0000 75%,#004051 0),
+    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(1*32px) calc(3*32px),
+    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(2*32px) calc(1*32px),
+    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(3*32px) calc(4*32px),
+    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(4*32px) calc(2*32px),
+    conic-gradient(at 50% 10%,#0000 75%,#004051 0) 0 calc(4*32px),
+    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(1*32px) calc(2*32px),
+    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(2*32px) 0,
+    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(3*32px) calc(3*32px),
+    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(4*32px) calc(1*32px),
+    #001920;
+background-size: 160px 160px;
+
+}
+
+section {
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 50px;
+    border-radius: 20px;
+    width: 80%;
+    
+}
