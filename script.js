@@ -31,14 +31,14 @@ const quizQuestions = [
     ${currentQuestion.options
       .map(
         option => `
-      <input type="radio" id="" name="${currentQuestion.name}" value="" />
+      <input type="radio" id="" name="${currentQuestion.name}" value="${option}" />
       <label for="">${option}</label>`
       )
       .join('')}
     `;
 
       // disables the "Previous" button when on the first question
-  prevBtn.disabled = currentQuestionIndex === 0;
+      prevBtn.disabled = currentQuestionIndex === 0;
   }
 
   nextBtn.addEventListener('click', () => {
@@ -58,6 +58,3 @@ const quizQuestions = [
   });
   
   document.addEventListener('DOMContentLoaded', displayQuestion);
-
-
-  
