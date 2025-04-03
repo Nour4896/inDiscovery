@@ -36,6 +36,9 @@ const quizQuestions = [
       )
       .join('')}
     `;
+
+      // disables the "Previous" button when on the first question
+  prevBtn.disabled = currentQuestionIndex === 0;
   }
 
   nextBtn.addEventListener('click', () => {
