@@ -18,6 +18,8 @@ const quizQuestions = [
   
   const quizQuestion = document.querySelector('#quiz-question');
   const quizForm = document.querySelector('#quiz-form');
+  const prevBtn = document.querySelector('#prev-btn');
+  const nextBtn = document.querySelector('#next-btn');
 
   let currentQuestionIndex = 0;
   
@@ -35,7 +37,24 @@ const quizQuestions = [
       .join('')}
     `;
   }
+
+  nextBtn.addEventListener('click', () => {
+    // checks if the current question is not the last in the quiz
+    if (currentQuestionIndex < quizQuestions.length - 1) {
+      currentQuestionIndex++;
+      displayQuestion();
+    }
+  });
+  
+  prevBtn.addEventListener('click', () => {
+    // checks that the current question is not the first in the quiz
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      displayQuestion();
+    }
+  });
   
   document.addEventListener('DOMContentLoaded', displayQuestion);
-  
+
+
   
