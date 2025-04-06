@@ -1,25 +1,35 @@
 html {
-    background:
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0),
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(1*32px) calc(3*32px),
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(2*32px) calc(1*32px),
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(3*32px) calc(4*32px),
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(4*32px) calc(2*32px),
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) 0 calc(4*32px),
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(1*32px) calc(2*32px),
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(2*32px) 0,
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(3*32px) calc(3*32px),
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(4*32px) calc(1*32px),
-    #001920;
-background-size: 160px 160px;
-
+    height: 100%;
 }
 
-section {
+body {
+    background: linear-gradient(to top, #0F2027, #203A43, #2C5364);
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.header {
+    background: #2C5364;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    height: 6%;
+}
+
+.navlinks {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main {
     background-color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding: 50px;
     border-radius: 20px;
     width: 80%;
-    
+    margin: 0 auto;
 }
