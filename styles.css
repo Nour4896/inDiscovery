@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Dangrek&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
     --primary-color: #8e54e9;
     --secondary-color: #4776e6;
-    --tertiary-color: rgb(210, 217, 78);
-    --main-font: "Dangrek", sans-serif
+    --tertiary-color: #afe954;
+    --main-font: "Dangrek", sans-serif;
+    --secondary-font: "Roboto", sans-serif;
 }
 
 html {
@@ -18,45 +20,58 @@ body {
 }
 
 .header {
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
+    margin: 0 auto;
+    text-align: center;
     display: flex;
-    justify-content: space-between;
-    padding: 0;
+    width: 25%;
 }
 
 .logo {
     font-family: var(--main-font);
     text-decoration: none;
     color: var(--tertiary-color);
-    font-size: 40px;
+    font-size: 45px;
+    text-align: center;
+    margin: 0;
 }
 
-.navlinks {
-    display: flex;
-    justify-content: space-between;
+.navlink {
+    margin: auto;
+    font-family: var(--secondary-font);
+    text-decoration: none;
+    color: var(--tertiary-color);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.wishlist {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-right: 50px;
+    margin-top: 40px;
 }
 
 .main {
-    background-color: rgb(255, 255, 255);
+    background-color: #dbe6ff;;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding: 50px;
+    padding: 45px;
     border-radius: 20px;
     width: 80%;
     margin: 0 auto;
-    margin-top: 150px;
+    margin-top: 40px;
+    height: 65%;
 }
 
 .footer {
     position: fixed;
     bottom: 0;
     background-color: var(--secondary-color);
-    font-family: var(--main-font);
-    font-weight: 100;
+    font-family: var(--secondary-font);
+    font-weight: 400;
     color: var(--tertiary-color);
     text-align: center;
     width: 100%;
     font-size: 18px;
+    margin-bottom: 5px;
 }
