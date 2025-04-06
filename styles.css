@@ -1,23 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Dangrek&display=swap');
+
+:root {
+    --primary-color: #8e54e9;
+    --secondary-color: #4776e6;
+    --tertiary-color: rgb(210, 217, 78);
+    --main-font: "Dangrek", sans-serif
+}
+
 html {
     height: 100%;
 }
 
 body {
-    background: linear-gradient(to top, #0F2027, #203A43, #2C5364);
+    background: linear-gradient(to top, #4776e6, #8e54e9);
     background-repeat: no-repeat;
     height: 100%;
 }
 
 .header {
-    background: #2C5364;
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     display: flex;
-    align-items: stretch;
     justify-content: space-between;
-    height: 6%;
+    padding: 0;
+}
+
+.logo {
+    font-family: var(--main-font);
+    text-decoration: none;
+    color: var(--tertiary-color);
+    font-size: 40px;
 }
 
 .navlinks {
@@ -32,4 +46,17 @@ body {
     border-radius: 20px;
     width: 80%;
     margin: 0 auto;
+    margin-top: 150px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    background-color: var(--secondary-color);
+    font-family: var(--main-font);
+    font-weight: 100;
+    color: var(--tertiary-color);
+    text-align: center;
+    width: 100%;
+    font-size: 18px;
 }
