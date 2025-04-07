@@ -1,25 +1,142 @@
-html {
-    background:
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0),
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(1*32px) calc(3*32px),
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(2*32px) calc(1*32px),
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(3*32px) calc(4*32px),
-    conic-gradient(at 10% 50%,#0000 75%,#004051 0) calc(4*32px) calc(2*32px),
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) 0 calc(4*32px),
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(1*32px) calc(2*32px),
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(2*32px) 0,
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(3*32px) calc(3*32px),
-    conic-gradient(at 50% 10%,#0000 75%,#004051 0) calc(4*32px) calc(1*32px),
-    #001920;
-background-size: 160px 160px;
+@import url('https://fonts.googleapis.com/css2?family=Dangrek&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root {
+    --primary-color: #8e54e9;
+    --secondary-color: #4776e6;
+    --tertiary-color: #afe954;
+    --gradient: linear-gradient(to top, #4776e6, #8e54e9);
+    --main-font: "Dangrek", sans-serif;
+    --secondary-font: "Roboto", sans-serif;
 }
 
-section {
-    background-color: rgb(255, 255, 255);
+html {
+    height: 100%;
+}
+
+body {
+    background: var(--gradient);
+    background-repeat: no-repeat;
+    height: 100%;
+}
+
+.header {
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    width: 25%;
+}
+
+.logo {
+    font-family: var(--main-font);
+    text-decoration: none;
+    color: var(--tertiary-color);
+    font-size: 45px;
+    text-align: center;
+    margin: 0;
+}
+
+.D {
+    color: #e98e54;
+}
+
+.navlink {
+    margin: auto;
+    font-family: var(--secondary-font);
+    text-decoration: none;
+    color: var(--tertiary-color);
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.wishlist {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin-right: 50px;
+    margin-top: 40px;
+}
+
+.main {
+    background-color: #dbe6ff;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding: 50px;
     border-radius: 20px;
     width: 80%;
-    
+    margin: 0 auto;
+    margin-top: 85px;
+    height: 65%;
+}
+.title {
+    position: relative;
+}
+
+.subtitle {
+    position: absolute;
+    top: 0;
+    margin: 190px 18% 0 18%;
+}
+
+.main_title {
+    font-family: var(--main-font);
+    color: var(--primary-color);
+    font-size: 120px;
+    text-align: center;
+    margin: 0;
+}
+
+.main_subtitle {
+    font-family: var(--secondary-font);
+    font-weight: 600;
+    line-height: 45px;
+    color: #e98e54;
+    font-size: 30px;
+    text-align: center;
+    margin: 0;
+}
+
+.buttons {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 160px;
+}
+
+.quiz_button {
+    background-color: var(--primary-color);
+    color: #dbe6ff;
+    padding: 20px;
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 0 30px;
+    cursor: pointer;
+}
+
+.random_button {
+    background-color: var(--secondary-color);
+    color: #dbe6ff;
+    padding: 20px;
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 0 30px;
+    cursor: pointer;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    background-color: var(--secondary-color);
+    font-family: var(--secondary-font);
+    font-weight: 500;
+    color: var(--tertiary-color);
+    text-align: center;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 5px;
 }
