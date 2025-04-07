@@ -63,7 +63,7 @@ body {
     border-radius: 20px;
     width: 80%;
     margin: 0 auto;
-    margin-top: 90px;
+    margin-top: 85px;
     height: 65%;
 }
 .title {
@@ -73,7 +73,7 @@ body {
 .subtitle {
     position: absolute;
     top: 0;
-    margin: 175px 18% 0 18%;
+    margin: 190px 18% 0 18%;
 }
 
 .main_title {
@@ -96,14 +96,36 @@ body {
 
 .buttons {
     position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 160px;
 }
 
 .quiz_button {
-
+    background-color: var(--primary-color);
+    color: #dbe6ff;
+    padding: 20px;
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 0 30px;
+    cursor: pointer;
 }
 
 .random_button {
-
+    background-color: var(--secondary-color);
+    color: #dbe6ff;
+    padding: 20px;
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 0 30px;
+    cursor: pointer;
 }
 
 .footer {
