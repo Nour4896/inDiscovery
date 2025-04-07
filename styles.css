@@ -85,19 +85,25 @@ body {
 }
 
 .main_subtitle {
-    font-family: var(--main-font);
+    font-family: var(--secondary-font);
+    font-weight: 600;
+    line-height: 45px;
     color: #e98e54;
     font-size: 30px;
     text-align: center;
     margin: 0;
 }
 
+.buttons {
+    position: absolute;
+}
+
 .quiz_button {
-    display: block;
+
 }
 
 .random_button {
-    display: block;
+
 }
 
 .footer {
