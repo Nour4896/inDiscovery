@@ -5,6 +5,7 @@
     --primary-color: #8e54e9;
     --secondary-color: #4776e6;
     --tertiary-color: #afe954;
+    --gradient: linear-gradient(to top, #4776e6, #8e54e9);
     --main-font: "Dangrek", sans-serif;
     --secondary-font: "Roboto", sans-serif;
 }
@@ -14,7 +15,7 @@ html {
 }
 
 body {
-    background: linear-gradient(to top, #4776e6, #8e54e9);
+    background: var(--gradient);
     background-repeat: no-repeat;
     height: 100%;
 }
@@ -35,6 +36,10 @@ body {
     margin: 0;
 }
 
+.D {
+    color: #e98e54;
+}
+
 .navlink {
     margin: auto;
     font-family: var(--secondary-font);
@@ -53,14 +58,46 @@ body {
 }
 
 .main {
-    background-color: #dbe6ff;;
+    background-color: #dbe6ff;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    padding: 45px;
     border-radius: 20px;
     width: 80%;
     margin: 0 auto;
-    margin-top: 40px;
+    margin-top: 90px;
     height: 65%;
+}
+.title {
+    position: relative;
+}
+
+.subtitle {
+    position: absolute;
+    top: 0;
+    margin: 175px 18% 0 18%;
+}
+
+.main_title {
+    font-family: var(--main-font);
+    color: var(--primary-color);
+    font-size: 120px;
+    text-align: center;
+    margin: 0;
+}
+
+.main_subtitle {
+    font-family: var(--main-font);
+    color: #e98e54;
+    font-size: 30px;
+    text-align: center;
+    margin: 0;
+}
+
+.quiz_button {
+    display: block;
+}
+
+.random_button {
+    display: block;
 }
 
 .footer {
@@ -68,7 +105,7 @@ body {
     bottom: 0;
     background-color: var(--secondary-color);
     font-family: var(--secondary-font);
-    font-weight: 400;
+    font-weight: 500;
     color: var(--tertiary-color);
     text-align: center;
     width: 100%;
