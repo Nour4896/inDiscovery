@@ -8,29 +8,19 @@
         <title>Quiz</title> 
     </head>
     <body>
-        <nav>
-            <ul>
-                <li><a href="landingpage.html">inDiscover</a></li>
-                <li><a href="quiz.html">Quiz</a></li>
-                <li><a href="randomizer.html">Randomizer</a></li>
-                <li>Wishlist</li>
-            </ul>
-        </nav>
+        <p class="wishlist">Wishlist</p>
+        <div class="header">
+                <p class="navlink"><a class="navlink"href="quiz.html">Quiz</a></p>
+                <p class="logo"><a class="logo" href="landingpage.html">in<span class="D">D</span>iscover</a></p>
+                <p class="navlink"><a class="navlink"href="randomizer.html">Randomizer</a></p>
+        </div>
         <main>
             <h1>Tell Us What You're In To!</h1>
             <section>
-                <h2>Question</h2>
-                <form>
-                    <input type="radio" id="" name="question1" value="">
-                    <label for="">Option 1</label>
-                    <input type="radio" id="" name="question1" value="">
-                    <label for="">Option 2</label>
-                    <input type="radio" id="" name="question1" value="">
-                    <label for="">Option 3</label>
-                    <input type="radio" id="" name="question1" value="">
-                    <label for="">Option 4</label>
-                    <button>Next</button>
-                </form>
+                <h2 id="quiz-question"></h2>
+                <form id="quiz-form"></form>
+                <button id="prev-btn" type="button">Previous</button>
+                <button id="next-btn" type="button">Next</button>
             </section>
         </main>
         <footer>&copy; Harrak, Rahim & Mervin 2025</footer>
