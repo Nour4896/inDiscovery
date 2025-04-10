@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "apicalypse": "^1.0.5",
-    "express": "^5.1.0"
-  }
-}
