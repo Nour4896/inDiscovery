@@ -63,8 +63,8 @@ body {
     border-radius: 20px;
     width: 80%;
     margin: 0 auto;
-    margin-top: 85px;
-    height: 65%;
+    margin-top: 50px;
+    height: 70%;
 }
 .title {
     position: relative;
@@ -139,4 +139,45 @@ body {
     width: 100%;
     font-size: 18px;
     margin-bottom: 5px;
+}
+
+.random_title {
+    font-family: var(--main-font);
+    color: var(--primary-color);
+    font-size: 75px;
+    text-align: center;
+    margin: 0;
+    line-height: 90px;
+}
+
+.game_cover {
+    display: block;
+    margin: 0 auto;
+    width: 18%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+}
+
+.description {
+    font-family: var(--secondary-font);
+    font-weight: 600;
+    color: var(--secondary-color);
+    font-size: 18px;
+    text-align: center;
+    margin: 30px 200px;
+}
+
+.randomizer {
+    background-color: var(--tertiary-color);
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: block;
+    margin: 15px auto;
+    cursor: pointer;
 }
