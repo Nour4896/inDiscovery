@@ -13,23 +13,45 @@ const IGDB_CONFIG = {
 const platformIds = {
   "PlayStation 5": 167,
   PC: 6,
-  IOS: 34,
-  Android: 39,
   "Xbox Series X": 169,
   "Nintendo Switch": 130,
+  Mobile: [34, 39], // IOS and Android
 };
 
-// genre IDs of base genres
+// Genre groupings
+const genreGroups = {
+  "Action & Adventure": [4, 5], // Action & Adventure
+  "RPG & Strategy": [12, 15], // RPG & Strategy
+  "Shooter & Fighting": [5, 6], // Shooter & Fighting
+  "Puzzle & Casual": [9, 36], // Puzzle & Casual
+};
+
+// Individual genre IDs
 const genreIds = {
+  // Action & Adventure group
   Action: 4,
   Adventure: 5,
+  "Hack and Slash": 25,
+
+  // RPG & Strategy group
   RPG: 12,
-  Shooter: 5,
-  Puzzle: 9,
-  Platformer: 8,
   Strategy: 15,
-  Horror: 11,
+  MOBA: 36,
+  Tactical: 24,
+
+  // Shooter & Fighting group
+  Shooter: 5,
+  "First-Person Shooter": 5,
+  "Battle Royale": 5,
   Fighting: 6,
+
+  // Puzzle & Casual group
+  Puzzle: 9,
+  "Board Game": 26,
+  "Card Game": 16,
+  Racing: 10,
+  Platform: 8,
+  Casual: 36,
 };
 
 //Test function with axios to display top 10 games
