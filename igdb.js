@@ -238,7 +238,65 @@ async function getGamesBySpecificGenre(platformName, genreName) {
   }
 }
 
-getGamesBySpecificGenre("PC", "Racing");
+// getGamesBySpecificGenre("PC", "Racing");
+
+async function getGamesByMultiplayerPreference(
+  platformName,
+  genreName,
+  isMultiplayer
+) {
+  try {
+    const genreId = genreIds[genreName];
+
+    // Handler for mobile which has both IOS and Android
+    let platformQuery;
+    if (platformName === "Mobile") {
+      platformQuery = `platforms = (${platformIds[platformName].join()})`;
+    } else {
+      platformQuery = `platforms = (${platformIds[platformName]})`;
+    }
+
+    // Query for multiplayer or single player games
+    let multiplayerQuery = "";
+    if (isMultiplayer) {
+      multiplayerQuery = `& (multiplayer_modes.onlinecoop = true | multiplayer_modes.onlinecoopmax > 0 | multiplayer_modes.campaigncoop = true)`;
+    }
+
+    // Add indie bias to the query
+    const indieQuery = createIndieQuery();
+
+    const response = await axios.post(
+      `${IGDB_CONFIG.base_url}/games`,
+      `fields name, genres.name, platforms.name, total_rating, summary, cover.url, multiplayer_modes.*;
+       where ${platformQuery} & genres = (${genreId}) ${multiplayerQuery} ${indieQuery} & total_rating != null;
+       sort total_rating desc;
+       limit 30;`,
+      {
+        headers: {
+          "Client-ID": IGDB_CONFIG.client_id,
+          Authorization: `${IGDB_CONFIG.access_token}`,
+        },
+      }
+    );
+
+    // Test to see if function properly works
+    if (response.data && response.data.length > 0) {
+      console.log("Games:");
+      response.data.forEach((game, i) => {
+        console.log(`${i + 1}. ${game.name}`);
+      });
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Error getting ${isMultiplayer ? "multiplayer" : "single player"} games:`,
+      error.message
+    );
+    return [];
+  }
+}
+getGamesByMultiplayerPreference("PC", "Action", false);
 
 // //Test functions with axios, commented out.
 
