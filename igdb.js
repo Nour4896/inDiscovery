@@ -191,8 +191,54 @@ async function testIndieGameBias(platformName = "PlayStation 5") {
     return [];
   }
 }
+// testIndieGameBias();
 
-testIndieGameBias();
+// Get games based on specific genre selection
+async function getGamesBySpecificGenre(platformName, genreName) {
+  try {
+    const genreId = genreIds[genreName];
+
+    // Handler for mobile which has both IOS and Android
+    let platformQuery;
+    if (platformName === "Mobile") {
+      platformQuery = `platforms = (${platformIds[platformName].join()})`;
+    } else {
+      platformQuery = `platforms = (${platformIds[platformName]})`;
+    }
+
+    // Add indie bias to the query
+    const indieQuery = createIndieQuery();
+
+    const response = await axios.post(
+      `${IGDB_CONFIG.base_url}/games`,
+      `fields name, genres.name, platforms.name, total_rating, summary, cover.url;
+       where ${platformQuery} & genres = (${genreId}) ${indieQuery} & total_rating != null;
+       sort total_rating desc;
+       limit 30;`,
+      {
+        headers: {
+          "Client-ID": IGDB_CONFIG.client_id,
+          Authorization: `${IGDB_CONFIG.access_token}`,
+        },
+      }
+    );
+
+    // Test to see if function properly works
+    if (response.data && response.data.length > 0) {
+      console.log("Games:");
+      response.data.forEach((game, i) => {
+        console.log(`${i + 1}. ${game.name}`);
+      });
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error(`Error getting games for genre ${genreName}:`, error.message);
+    return [];
+  }
+}
+
+getGamesBySpecificGenre("PC", "Racing");
 
 // //Test functions with axios, commented out.
 
