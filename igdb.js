@@ -59,7 +59,7 @@ const genreIds = {
 
 // Function to place bias on indie games
 function createIndieQuery() {
-  return `& (genres = (${INDIE_GENRE_ID}) | keywords.name ~ *"indie"* | (rating_count < 500 & total_rating > 75))`;
+  return `& (genres = (${INDIE_GENRE_ID}) | (rating_count < 500 & total_rating > 75))`;
 }
 
 // Get games based on platform selection
@@ -105,7 +105,54 @@ async function getGamesByPlatform(platformName) {
   }
 }
 
-getGamesByPlatform("PC");
+// getGamesByPlatform("PC");
+
+// Get games based on genre group selection
+async function getGamesByGenreGroup(platformName, genreGroupName) {
+  try {
+    const genreGroupIds = genreGroups[genreGroupName];
+
+    // Handler for mobile which has both IOS and Android
+    let platformQuery;
+    if (platformName === "Mobile") {
+      platformQuery = `platforms = (${platformIds[platformName].join()})`;
+    } else {
+      platformQuery = `platforms = (${platformIds[platformName]})`;
+    }
+
+    // Add indie bias to the query
+    const indieQuery = createIndieQuery();
+
+    const response = await axios.post(
+      `${IGDB_CONFIG.base_url}/games`,
+      `fields name, genres.name, platforms.name, total_rating, summary, cover.url;
+       where ${platformQuery} & genres = (${genreGroupIds.join()}) ${indieQuery} & total_rating != null;
+       sort total_rating desc;
+       limit 30;`,
+      {
+        headers: {
+          "Client-ID": IGDB_CONFIG.client_id,
+          Authorization: `${IGDB_CONFIG.access_token}`,
+        },
+      }
+    );
+
+    // Test to see if function properly works
+    if (response.data && response.data.length > 0) {
+      console.log("Games:");
+      response.data.forEach((game, i) => {
+        console.log(`${i + 1}. ${game.name}`);
+      });
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error(`Error getting games for ${genreGroupName}:`, error.message);
+    return [];
+  }
+}
+
+// getGamesByGenreGroup("PC", "Action & Adventure");
 
 // //Test functions with axios, commented out.
 
