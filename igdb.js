@@ -154,6 +154,46 @@ async function getGamesByGenreGroup(platformName, genreGroupName) {
 
 // getGamesByGenreGroup("PC", "Action & Adventure");
 
+// Test function to check the indie bias in results
+async function testIndieGameBias(platformName = "PlayStation 5") {
+  try {
+    const indieQuery = createIndieQuery();
+
+    const response = await axios.post(
+      `${IGDB_CONFIG.base_url}/games`,
+      `fields name, genres.name, platforms.name, total_rating, involved_companies.company.name;
+       where platforms = (${platformIds[platformName]}) ${indieQuery} & total_rating != null;
+       sort total_rating desc;
+       limit 20;`,
+      {
+        headers: {
+          "Client-ID": IGDB_CONFIG.client_id,
+          Authorization: `${IGDB_CONFIG.access_token}`,
+        },
+      }
+    );
+
+    console.log(`Top 20 Indie Games for ${platformName}:`);
+    response.data.forEach((game, i) => {
+      const genres = game.genres
+        ? game.genres.map((g) => g.name).join(", ")
+        : "N/A";
+      console.log(
+        `${i + 1}. ${game.name} (Rating: ${
+          game.total_rating
+        }) - Genres: ${genres}`
+      );
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(`Error in indie game test:`, error.message);
+    return [];
+  }
+}
+
+testIndieGameBias();
+
 // //Test functions with axios, commented out.
 
 // async function getGames() {
