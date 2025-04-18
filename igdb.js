@@ -296,157 +296,80 @@ async function getGamesByMultiplayerPreference(
     return [];
   }
 }
-getGamesByMultiplayerPreference("PC", "Action", false);
+// getGamesByMultiplayerPreference("PC", "Action", false);
 
-// //Test functions with axios, commented out.
+// Export functions for use in other files
+module.exports = {
+  getGamesByPlatform,
+  getGamesByGenreGroup,
+  getGamesBySpecificGenre,
+  getGamesByMultiplayerPreference,
+  platformIds,
+  genreGroups,
+  genreIds,
+  INDIE_GENRE_ID,
+  getRandomIndieGame,
+  testRandomizer,
+};
 
-// async function getGames() {
-//   try {
-//     const response = await axios.post(
-//       `${IGDB_CONFIG.base_url}/games`,
-//       "fields name; total_rating; where total_rating != null; sort total_rating desc;  limit 10;",
-//       {
-//         headers: {
-//           "Client-ID": IGDB_CONFIG.client_id,
-//           Authorization: `${IGDB_CONFIG.access_token}`,
-//         },
-//       }
-//     );
+async function getRandomIndieGame() {
+  try {
+    // counts matching games
+    const countResp = await axios.post(
+      `${IGDB_CONFIG.base_url}/games/count`,
+      `where genres = (${INDIE_GENRE_ID}) & total_rating > 70;`,
+      {
+        headers: {
+          "Client-ID": IGDB_CONFIG.client_id,
+          Authorization: `${IGDB_CONFIG.access_token}`,
+        },
+      }
+    );
+    const total = countResp.data.count;
 
-//     if (response.data && response.data.length > 0) {
-//       console.log("Top 10 Games:");
-//       response.data.forEach((game, i) => {
-//         console.log(`${i + 1}. ${game.name}`);
-//       });
-//     } else {
-//       console.log("No games found.");
-//     }
-//   } catch (error) {
-//     console.error("Error getting games:", error.message);
-//   }
-// }
+    // random offset added into list of games
+    const offset = Math.floor(Math.random() * Math.max(1, total - 1));
 
-// // Test function to get top 10 games for PS5
-// async function getGamesWithPlatform(platformName, platformId) {
-//   try {
-//     const response = await axios.post(
-//       `${IGDB_CONFIG.base_url}/games`,
-//       `fields name, platforms.name, total_rating; where platforms = (${platformId}) & total_rating != null; sort total_rating desc; limit 10;`,
-//       {
-//         headers: {
-//           "Client-ID": IGDB_CONFIG.client_id,
-//           Authorization: `${IGDB_CONFIG.access_token}`,
-//         },
-//       }
-//     );
+    // Fetch only 1 game at that offset
+    const resp = await axios.post(
+      `${IGDB_CONFIG.base_url}/games`,
+      `
+        fields name, total_rating, summary, cover.url;
+        where genres = (${INDIE_GENRE_ID}) & total_rating > 70;
+        limit 1;
+        offset ${offset};
+      `,
+      {
+        headers: {
+          "Client-ID": IGDB_CONFIG.client_id,
+          Authorization: `${IGDB_CONFIG.access_token}`,
+        },
+      }
+    );
 
-//     if (response.data && response.data.length > 0) {
-//       console.log(`Top 10 Games for ${platformName}:`);
-//       response.data.forEach((game, i) => {
-//         console.log(`${i + 1}. ${game.name}`);
-//       });
-//     } else {
-//       console.log(`No games found for ${platformName}.`);
-//     }
-//   } catch (error) {
-//     console.error("Error getting games", error.message);
-//   }
-// }
+    // Extracts game from response data and formats it
+    const game = resp.data[0];
+    if (!game) return null;
 
-// async function getGamesWith(platformName, platformId) {
-//   try {
-//     const response = await axios.post(
-//       `${IGDB_CONFIG.base_url}/games`,
-//       `fields name, platforms.name, total_rating; where platforms = (${platformId}) & total_rating != null; sort total_rating desc; limit 10;`,
-//       {
-//         headers: {
-//           "Client-ID": IGDB_CONFIG.client_id,
-//           Authorization: `${IGDB_CONFIG.access_token}`,
-//         },
-//       }
-//     );
+    return {
+      name: game.name,
+      rating: Math.round(game.total_rating),
+      summary: game.summary || "No summary available",
+      cover: game.cover
+        ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.url
+            .split("/")
+            .pop()}`
+        : null,
+    };
+  } catch (err) {
+    console.error("Error fetching random indie game:", err.message);
+    return null;
+  }
+}
 
-//     if (response.data && response.data.length > 0) {
-//       console.log(`Top 10 Games for ${platformName}:`);
-//       response.data.forEach((game, i) => {
-//         console.log(`${i + 1}. ${game.name}`);
-//       });
-//     } else {
-//       console.log(`No games found for ${platformName}.`);
-//     }
-//   } catch (error) {
-//     console.error("Error getting games", error.message);
-//   }
-// }
-
-// //Test function to get top 10 online coop games
-// async function getOnlineCoopGames() {
-//   try {
-//     const response = await axios.post(
-//       `${IGDB_CONFIG.base_url}/games`,
-//       `fields name, multiplayer_modes.onlinecoop, total_rating;
-//        where multiplayer_modes.onlinecoop = true & total_rating != null;
-//        sort total_rating desc;
-//        limit 10;`,
-//       {
-//         headers: {
-//           "Client-ID": IGDB_CONFIG.client_id,
-//           Authorization: `${IGDB_CONFIG.access_token}`,
-//         },
-//       }
-//     );
-
-//     if (response.data.length > 0) {
-//       console.log("Top 10 Online Co-op Games:");
-//       response.data.forEach((game, i) => {
-//         console.log(`${i + 1}. ${game.name}`);
-//       });
-//     } else {
-//       console.log("No games found.");
-//     }
-//   } catch (err) {
-//     console.error("Error getting games:", err.message);
-//   }
-// }
-
-// async function getTopGamesByGenre(genreName) {
-//   const genreId = genreIds[genreName];
-//   try {
-//     const response = await axios.post(
-//       `${IGDB_CONFIG.base_url}/games`,
-//       `fields name,  genres.name, total_rating;
-//        where genres = (${genreId}) & total_rating != null;
-//        sort total_rating desc;
-//        limit 10;
-//        `,
-//       {
-//         headers: {
-//           "Client-ID": IGDB_CONFIG.client_id,
-//           Authorization: `${IGDB_CONFIG.access_token}`,
-//         },
-//       }
-//     );
-
-//     if (response.data.length > 0) {
-//       console.log(`Top 10 ${genreName} Games:`);
-//       response.data.forEach((game, i) => {
-//         console.log(`${i + 1}. ${game.name}`);
-//       });
-//     } else {
-//       console.log(`No games found for ${genreName}.`);
-//     }
-//   } catch (error) {
-//     console.error(`Error getting ${genreName} games:`, error.message);
-//   }
-// }
-
-// // getGames();
-
-// // const selectedPlatform = "PlayStation 5"; // Should be selected by user
-// // const selectedId = platformIds[selectedPlatform];
-
-// // getGamesWithPlatform(selectedPlatform, selectedId);
-
-// // getOnlineCoopGames();
-
-// getTopGamesByGenre("Adventure");
+//Test function to log random game
+async function testRandomizer() {
+  const game = await getRandomIndieGame();
+  console.log("Random Indie Game:", game);
+}
+testRandomizer();
