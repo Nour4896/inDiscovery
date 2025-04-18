@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles.css">
-        <script defer src="script.js"></script>
-        <title>Randomizer</title> 
-    </head>
-    <body>
-        <p class="wishlist">Wishlist</p>
-        <div class="header">
-                <p class="navlink"><a class="navlink"href="quiz.html">Quiz</a></p>
-                <p class="logo"><a class="logo" href="index.html">in<span class="D">D</span>iscover</a></p>
-                <p class="navlink"><a class="navlink"href="randomizer.html">Randomizer</a></p>
-        </div>
-        <section class="main">
-            <h1 class="random_title">Halo 2</h1>
-            <div class="randomizer_content">
-                <img class="game_cover" src="https://preview.redd.it/0ia84jqrhnj51.png?width=640&crop=smart&auto=webp&s=2833af60b3b15ed406dce18d987d3fc92abe47b3">
-                <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quasi pariatur culpa deserunt et harum. Ipsum voluptatibus pariatur magnam deleniti sed temporibus, nam unde, placeat corporis hic sapiente sunt alias.</p>
-            </div>
-        </section>
-        <button class="randomizer">Randomize</button>
-        <footer class="footer">&copy; Harrak, Rahim & Mervin 2025</footer>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+      defer
+    ></script>
+    <script src="igdb.js" defer></script>
+    <title>Randomizer</title>
+  </head>
+  <body>
+    <p class="wishlist">Wishlist</p>
+    <div class="header">
+      <p class="navlink"><a class="navlink" href="quiz.html">Quiz</a></p>
+      <p class="logo">
+        <a class="logo" href="index.html">in<span class="D">D</span>iscover</a>
+      </p>
+      <p class="navlink">
+        <a class="navlink" href="randomizer.html">Randomizer</a>
+      </p>
+    </div>
+    <section class="main">
+      <h1 class="random_title">Halo 2</h1>
+      <div class="randomizer_content">
+        <img
+          class="game_cover"
+          src="https://preview.redd.it/0ia84jqrhnj51.png?width=640&crop=smart&auto=webp&s=2833af60b3b15ed406dce18d987d3fc92abe47b3"
+        />
+        <p class="description">Loading...</p>
+      </div>
+    </section>
+    <button class="randomizer">Randomize</button>
+    <footer class="footer">&copy; Harrak, Rahim & Mervin 2025</footer>
+  </body>
 </html>

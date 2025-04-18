@@ -262,67 +262,67 @@ async function getGamesByMultiplayerPreference(
 }
 // getGamesByMultiplayerPreference("PC", "Action", false);
 
-async function getRandomIndieGame() {
-  try {
-    // counts matching games
-    const countResp = await axios.post(
-      `${IGDB_CONFIG.base_url}/games/count`,
-      `where genres = (${INDIE_GENRE_ID}) & total_rating > 70;`,
-      {
-        headers: {
-          "Client-ID": IGDB_CONFIG.client_id,
-          Authorization: `${IGDB_CONFIG.access_token}`,
-        },
-      }
-    );
-    const total = countResp.data.count;
+// async function getRandomIndieGame() {
+//   try {
+//     // counts matching games
+//     const countResp = await axios.post(
+//       `${IGDB_CONFIG.base_url}/games/count`,
+//       `where genres = (${INDIE_GENRE_ID}) & total_rating > 70;`,
+//       {
+//         headers: {
+//           "Client-ID": IGDB_CONFIG.client_id,
+//           Authorization: `${IGDB_CONFIG.access_token}`,
+//         },
+//       }
+//     );
+//     const total = countResp.data.count;
 
-    // random offset added into list of games
-    const offset = Math.floor(Math.random() * Math.max(1, total - 1));
+//     // random offset added into list of games
+//     const offset = Math.floor(Math.random() * Math.max(1, total - 1));
 
-    // Fetch only 1 game at that offset
-    const resp = await axios.post(
-      `${IGDB_CONFIG.base_url}/games`,
-      `
-        fields name, total_rating, summary, cover.url;
-        where genres = (${INDIE_GENRE_ID}) & total_rating > 70;
-        limit 1;
-        offset ${offset};
-      `,
-      {
-        headers: {
-          "Client-ID": IGDB_CONFIG.client_id,
-          Authorization: `${IGDB_CONFIG.access_token}`,
-        },
-      }
-    );
+//     // Fetch only 1 game at that offset
+//     const resp = await axios.post(
+//       `${IGDB_CONFIG.base_url}/games`,
+//       `
+//         fields name, total_rating, summary, cover.url;
+//         where genres = (${INDIE_GENRE_ID}) & total_rating > 70;
+//         limit 1;
+//         offset ${offset};
+//       `,
+//       {
+//         headers: {
+//           "Client-ID": IGDB_CONFIG.client_id,
+//           Authorization: `${IGDB_CONFIG.access_token}`,
+//         },
+//       }
+//     );
 
-    // Extracts game from response data and formats it
-    const game = resp.data[0];
-    if (!game) return null;
+//     // Extracts game from response data and formats it
+//     const game = resp.data[0];
+//     if (!game) return null;
 
-    return {
-      name: game.name,
-      rating: Math.round(game.total_rating),
-      summary: game.summary || "No summary available",
-      cover: game.cover
-        ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.url
-            .split("/")
-            .pop()}`
-        : null,
-    };
-  } catch (err) {
-    console.error("Error fetching random indie game:", err.message);
-    return null;
-  }
-}
+//     return {
+//       name: game.name,
+//       rating: Math.round(game.total_rating),
+//       summary: game.summary || "No summary available",
+//       cover: game.cover
+//         ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.url
+//             .split("/")
+//             .pop()}`
+//         : null,
+//     };
+//   } catch (err) {
+//     console.error("Error fetching random indie game:", err.message);
+//     return null;
+//   }
+// }
 
-//Test function to log random game
-async function testRandomizer() {
-  const game = await getRandomIndieGame();
-  console.log("Random Indie Game:", game);
-}
-testRandomizer();
+// //Test function to log random game
+// async function testRandomizer() {
+//   const game = await getRandomIndieGame();
+//   console.log("Random Indie Game:", game);
+// }
+// testRandomizer();
 
 // Test function to check the indie bias in results
 async function testIndieGameBias(platformName = "PlayStation 5") {
@@ -362,6 +362,90 @@ async function testIndieGameBias(platformName = "PlayStation 5") {
   }
 }
 // testIndieGameBias();
+
+async function getRandomIndieGame() {
+  const gameTitle = document.querySelector(".random_title");
+  const gameCover = document.querySelector(".game_cover");
+  const gameDescription = document.querySelector(".description");
+  const randomizerButton = document.querySelector(".randomizer");
+
+  try {
+    // counts matching games
+    const countResp = await axios.post(
+      `${IGDB_CONFIG.base_url}/games/count`,
+      `where genres = (${INDIE_GENRE_ID}) & total_rating > 70;`,
+      {
+        headers: {
+          "Client-ID": IGDB_CONFIG.client_id,
+          Authorization: `${IGDB_CONFIG.access_token}`,
+        },
+      }
+    );
+    const total = countResp.data.count;
+
+    // random offset added into list of games
+    const offset = Math.floor(Math.random() * Math.max(1, total - 1));
+
+    // Fetch only 1 game at that offset
+    const resp = await axios.post(
+      `${IGDB_CONFIG.base_url}/games`,
+      `
+        fields name, total_rating, summary, cover.url;
+        where genres = (${INDIE_GENRE_ID}) & total_rating > 70;
+        limit 1;
+        offset ${offset};
+      `,
+      {
+        headers: {
+          "Client-ID": IGDB_CONFIG.client_id,
+          Authorization: `${IGDB_CONFIG.access_token}`,
+        },
+      }
+    );
+
+    // Extracts game from response data and formats it
+    const game = resp.data[0];
+    if (!game) {
+      titleEl.textContent = "No game found";
+      return;
+    }
+
+    // Update the page with the result
+    gameTitle.textContent = game.name;
+    gameDescription.textContent = `${
+      game.summary || "No summary"
+    } (Rating: ${Math.round(game.total_rating)}/100)`;
+    gameCover.src = game.cover
+      ? `https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.url
+          .split("/")
+          .pop()}`
+      : "";
+
+    gameTitle.textContent = gameData.name;
+    gameDescription.textContent = `${gameData.summary} (Rating: ${gameData.rating}/100)`;
+    gameCover.src = gameData.cover;
+  } catch (err) {
+    console.error("Error fetching random indie game:", err.message);
+    gameTitle.textContent = "Error";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const randomizeButton = document.querySelector(".randomizer");
+  if (randomizeButton) {
+    randomizeButton.addEventListener("click", getRandomIndieGame);
+
+    // Load initial game when page loads
+    getRandomIndieGame();
+  }
+});
+
+// //Test function to log random game
+// async function testRandomizer() {
+//   const game = await getRandomIndieGame();
+//   console.log("Random Indie Game:", game);
+// }
+// testRandomizer();
 
 // Export functions for use in other files
 module.exports = {
