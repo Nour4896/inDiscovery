@@ -210,3 +210,25 @@ body {
     margin: 15px auto;
     cursor: pointer;
 }
+
+.results_title {
+    font-family: var(--main-font);
+    color: var(--primary-color);
+    font-size: 75px;
+    text-align: center;
+    margin: 0;
+    line-height: 90px;
+    padding-bottom: 10px;
+}
+
+.results_row {
+    display: flex;
+    justify-content: space-around;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.result {
+    background-color: var(--primary-color);
+    padding: 80px 160px;
+}

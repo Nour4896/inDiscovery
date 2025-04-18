@@ -1,17 +1,17 @@
 const quizQuestions = [
   {
-    question: "Question 1",
-    options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    question: "What system are you playing on?",
+    options: ["Nintendo Switch", "PC", "PlayStation 5", "Xbox Series X"],
     name: "question1",
   },
   {
-    question: "Question 2",
-    options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    question: "What genre are you in the mood for?",
+    options: ["RPG", "Platformer", "Puzzle", "Shooter"],
     name: "question2",
   },
   {
-    question: "Question 3",
-    options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    question: "Who are you playing with?",
+    options: ["Single Player", "Online Co-Op", "Couch Co-Op", "Multiplayer"],
     name: "question3",
   },
 ];
