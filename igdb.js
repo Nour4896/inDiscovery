@@ -1,13 +1,16 @@
 require("dotenv").config(); //client_id, client_secret, and access_token saved here
 const axios = require("axios"); //JS library
 
-// IGDB setup
+// IGDB Configuration
+
 const IGDB_CONFIG = {
   client_id: process.env.CLIENT_ID,
   client_secret: process.env.CLIENT_SECRET,
   access_token: process.env.ACCESS_TOKEN,
   base_url: "https://api.igdb.com/v4",
 };
+
+//Constants
 
 // Indie genre ID
 const INDIE_GENRE_ID = 32;
@@ -154,45 +157,6 @@ async function getGamesByGenreGroup(platformName, genreGroupName) {
 
 // getGamesByGenreGroup("PC", "Action & Adventure");
 
-// Test function to check the indie bias in results
-async function testIndieGameBias(platformName = "PlayStation 5") {
-  try {
-    const indieQuery = createIndieQuery();
-
-    const response = await axios.post(
-      `${IGDB_CONFIG.base_url}/games`,
-      `fields name, genres.name, platforms.name, total_rating, involved_companies.company.name;
-       where platforms = (${platformIds[platformName]}) ${indieQuery} & total_rating != null;
-       sort total_rating desc;
-       limit 20;`,
-      {
-        headers: {
-          "Client-ID": IGDB_CONFIG.client_id,
-          Authorization: `${IGDB_CONFIG.access_token}`,
-        },
-      }
-    );
-
-    console.log(`Top 20 Indie Games for ${platformName}:`);
-    response.data.forEach((game, i) => {
-      const genres = game.genres
-        ? game.genres.map((g) => g.name).join(", ")
-        : "N/A";
-      console.log(
-        `${i + 1}. ${game.name} (Rating: ${
-          game.total_rating
-        }) - Genres: ${genres}`
-      );
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error(`Error in indie game test:`, error.message);
-    return [];
-  }
-}
-// testIndieGameBias();
-
 // Get games based on specific genre selection
 async function getGamesBySpecificGenre(platformName, genreName) {
   try {
@@ -298,20 +262,6 @@ async function getGamesByMultiplayerPreference(
 }
 // getGamesByMultiplayerPreference("PC", "Action", false);
 
-// Export functions for use in other files
-module.exports = {
-  getGamesByPlatform,
-  getGamesByGenreGroup,
-  getGamesBySpecificGenre,
-  getGamesByMultiplayerPreference,
-  platformIds,
-  genreGroups,
-  genreIds,
-  INDIE_GENRE_ID,
-  getRandomIndieGame,
-  testRandomizer,
-};
-
 async function getRandomIndieGame() {
   try {
     // counts matching games
@@ -373,3 +323,56 @@ async function testRandomizer() {
   console.log("Random Indie Game:", game);
 }
 testRandomizer();
+
+// Test function to check the indie bias in results
+async function testIndieGameBias(platformName = "PlayStation 5") {
+  try {
+    const indieQuery = createIndieQuery();
+
+    const response = await axios.post(
+      `${IGDB_CONFIG.base_url}/games`,
+      `fields name, genres.name, platforms.name, total_rating, involved_companies.company.name;
+       where platforms = (${platformIds[platformName]}) ${indieQuery} & total_rating != null;
+       sort total_rating desc;
+       limit 20;`,
+      {
+        headers: {
+          "Client-ID": IGDB_CONFIG.client_id,
+          Authorization: `${IGDB_CONFIG.access_token}`,
+        },
+      }
+    );
+
+    console.log(`Top 20 Indie Games for ${platformName}:`);
+    response.data.forEach((game, i) => {
+      const genres = game.genres
+        ? game.genres.map((g) => g.name).join(", ")
+        : "N/A";
+      console.log(
+        `${i + 1}. ${game.name} (Rating: ${
+          game.total_rating
+        }) - Genres: ${genres}`
+      );
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(`Error in indie game test:`, error.message);
+    return [];
+  }
+}
+// testIndieGameBias();
+
+// Export functions for use in other files
+module.exports = {
+  getGamesByPlatform,
+  getGamesByGenreGroup,
+  getGamesBySpecificGenre,
+  getGamesByMultiplayerPreference,
+  platformIds,
+  genreGroups,
+  genreIds,
+  INDIE_GENRE_ID,
+  getRandomIndieGame,
+  testRandomizer,
+};
