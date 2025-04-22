@@ -37,7 +37,7 @@ const quizQuestions = [
   },
   {
     question: "What genre would you like?",
-    options: [],
+    options: [], // Will be populated based on vibe selection
     name: "genre",
   },
   {
@@ -138,6 +138,12 @@ function updateGenreOptions(vibe) {
         genreQuestion.options = [];
     }
   }
+}
+
+function submitQuiz() {
+  // Store the answers in session storage for retrieval on the results page
+  sessionStorage.setItem("quizAnswers", JSON.stringify(userAnswers));
+  window.location.href = "quizResults.html";
 }
 
 // Start quiz
