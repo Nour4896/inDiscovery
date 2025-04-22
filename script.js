@@ -197,4 +197,8 @@ function displayResults(games) {
 // Start quiz
 document.addEventListener("DOMContentLoaded", () => {
   if (quizQuestion && quizForm) displayQuestion();
+  const resultsContainer = document.querySelector(".results_row");
+  if (resultsContainer) {
+    loadQuizResults();
+  }
 });
