@@ -1,3 +1,8 @@
+const excitingGenres = ["Role-Playing", "Shooter", "Platformer", "Hack and Slash"]
+const strategicGenres = ["Tactical", "Turn-Based", "Strategy", "RTS"]
+const thoughtfulGenres = ["Puzzle", "Quiz", "Point and Click", "Visual Novel"]
+const competitiveGenres = ["Fighting", "Racing", "Sport", "MOBA"]
+
 const quizQuestions = [
   {
     question: "What system are you playing on?",
@@ -5,14 +10,19 @@ const quizQuestions = [
     name: "question1",
   },
   {
-    question: "What genre are you in the mood for?",
-    options: ["RPG", "Platformer", "Puzzle", "Shooter"],
+    question: "What vibe of game are you in the mood for?",
+    options: ["Exciting", "Strategic", "Thoughtful", "Competitive"],
     name: "question2",
+  },
+  {
+    question: "What genre would you like?",
+    options: ["RPG", "Platformer", "Puzzle", "Shooter"],
+    name: "question3",
   },
   {
     question: "Who are you playing with?",
     options: ["Single Player", "Online Co-Op", "Couch Co-Op", "Multiplayer"],
-    name: "question3",
+    name: "question4",
   },
 ];
 

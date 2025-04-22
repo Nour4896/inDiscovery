@@ -113,6 +113,11 @@ body {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     margin: 0 30px;
     cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.quiz_button:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .random_button {
@@ -126,6 +131,11 @@ body {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     margin: 0 30px;
     cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.random_button:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .footer {
@@ -180,6 +190,11 @@ body {
     display: block;
     margin: 15px auto;
     cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.randomizer:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .quiz_title {
@@ -209,6 +224,11 @@ body {
     display: block;
     margin: 15px auto;
     cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.nav_button:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .results_title {
