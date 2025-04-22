@@ -1,28 +1,39 @@
-const excitingGenres = ["Role-Playing", "Shooter", "Platformer", "Hack and Slash"]
-const strategicGenres = ["Tactical", "Turn-Based", "Strategy", "RTS"]
-const thoughtfulGenres = ["Puzzle", "Quiz", "Point and Click", "Visual Novel"]
-const competitiveGenres = ["Fighting", "Racing", "Sport", "MOBA"]
+const excitingGenres = [
+  "Role-Playing",
+  "Shooter",
+  "Platformer",
+  "Hack and Slash",
+];
+const strategicGenres = ["Tactical", "Turn-Based", "Strategy", "RTS"];
+const thoughtfulGenres = ["Puzzle", "Quiz", "Point and Click", "Visual Novel"];
+const competitiveGenres = ["Fighting", "Racing", "Sport", "MOBA"];
 
 const quizQuestions = [
   {
     question: "What system are you playing on?",
-    options: ["Nintendo Switch", "PC", "PlayStation 5", "Xbox Series X"],
-    name: "question1",
+    options: [
+      "Nintendo Switch",
+      "PC",
+      "PlayStation 5",
+      "Xbox Series X",
+      "Mobile",
+    ],
+    name: "platform",
   },
   {
     question: "What vibe of game are you in the mood for?",
     options: ["Exciting", "Strategic", "Thoughtful", "Competitive"],
-    name: "question2",
+    name: "vibe",
   },
   {
     question: "What genre would you like?",
-    options: ["RPG", "Platformer", "Puzzle", "Shooter"],
-    name: "question3",
+    options: [], // Will be populated based on vibe selection
+    name: "genre",
   },
   {
-    question: "Who are you playing with?",
-    options: ["Single Player", "Online Co-Op", "Couch Co-Op", "Multiplayer"],
-    name: "question4",
+    question: "Are you looking for a solo or multiplayer experience?",
+    options: ["Solo", "Multiplayer"],
+    name: "multiplayerMode",
   },
 ];
 
