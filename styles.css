@@ -209,7 +209,8 @@ body {
 .nav_buttons {
     display: flex;
     justify-content: space-around;
-    padding-bottom: 5px;
+    padding-top: 50px;
+    padding-bottom: 20px;
 }
 
 .nav_button {
@@ -222,9 +223,13 @@ body {
     font-weight: 500;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     display: block;
-    margin: 15px auto;
     cursor: pointer;
     transition: box-shadow 0.3s;
+}
+
+.nav_button:disabled {
+    background-color: grey;
+    color: rgb(192, 192, 192);
 }
 
 .nav_button:hover {
