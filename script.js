@@ -56,6 +56,18 @@ function displayQuestion() {
   
   //disables the "Next" button if an answer is not selected
   nextBtn.disabled = !selectedAnswer;
+
+  document.querySelectorAll(`input[name="${currentQuestion.name}"]`).forEach(input => {
+    input.addEventListener("change", e => {
+        quizAnswers[currentQuestion.name] = e.target.value;
+        saveQuizAnswer(); 
+        nextBtn.disabled = false;
+    });
+  });
+}
+
+function saveQuizAnswer() {
+    localStorage.setItem("quizAnswers", JSON.stringify(quizAnswers));
 }
 
 nextBtn.addEventListener("click", () => {
@@ -73,5 +85,7 @@ prevBtn.addEventListener("click", () => {
     displayQuestion();
   }
 });
+
+
 
 document.addEventListener("DOMContentLoaded", displayQuestion);
