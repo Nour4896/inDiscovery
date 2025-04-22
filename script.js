@@ -141,9 +141,57 @@ function updateGenreOptions(vibe) {
 }
 
 function submitQuiz() {
-  // Store the answers in session storage for retrieval on the results page
+  // Store the answers in session storage
   sessionStorage.setItem("quizAnswers", JSON.stringify(userAnswers));
   window.location.href = "quizResults.html";
+}
+
+async function loadQuizResults() {
+  const answers = JSON.parse(sessionStorage.getItem("quizAnswers"));
+  if (!answers) {
+    alert("No quiz answers found. Please take the quiz first.");
+    window.location.href = "quiz.html";
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/quiz-results", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(answers),
+    });
+
+    const games = await response.json();
+    displayResults(games);
+  } catch (error) {
+    console.error("Error fetching quiz results:", error);
+    alert("Failed to get game recomendations. Please try again.");
+  }
+}
+
+function displayResults(games) {
+  // Get results
+  const gameResults = document.querySelectorAll(".result");
+
+  // Display upto 9 games or however many games populate
+  games.slice(0, gameResults.length).forEach((game, index) => {
+    const games = gameResults[index];
+
+    games.innerHTML = `
+      <div class="game-card">
+        <h3 class="game-title">${game.name}</h3>
+        ${
+          game.cover
+            ? `<img src="${game.cover}" class="game-cover" alt="${game.name} cover">`
+            : ""
+        }
+        <p class="game-rating">Rating: ${Math.round(game.total_rating)}/100</p>
+        <p class="game-summary">${game.summary}</p>
+      </div>
+    `;
+  });
 }
 
 // Start quiz
