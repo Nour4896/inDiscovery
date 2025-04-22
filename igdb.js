@@ -11,7 +11,6 @@ const IGDB_CONFIG = {
 };
 
 //Constants
-
 // Indie genre ID
 const INDIE_GENRE_ID = 32;
 
@@ -26,38 +25,37 @@ const platformIds = {
 
 // Genre groupings
 const genreGroups = {
-  "Action & Adventure": [4, 5], // Action & Adventure
-  "RPG & Strategy": [12, 15], // RPG & Strategy
-  "Shooter & Fighting": [5, 6], // Shooter & Fighting
-  "Puzzle & Casual": [9, 36], // Puzzle & Casual
+  Exciting: [12, 5, 8, 25], // Role-playing(RPG), Shooter, Platform, Hack and Slash
+  Strategic: [24, 15, 16, 11], // Tactical, Strategy, Turn-based strategy(TBS), Real Time Strategy(RTS)
+  Thoughtful: [9, 26, 2, 34], // Puzzle, Quiz/Trivia, Point-and-Click, Visual Novel
+  Competitive: [4, 10, 14, 36], // Fighting, Racing, Sport, MOBA
 };
 
 // Individual genre IDs
 const genreIds = {
-  // Action & Adventure group
-  Action: 4,
-  Adventure: 5,
+  // Exciting group
+  "Role-Playing(RPG)": 12,
+  Shooter: 5,
+  Platform: 8,
   "Hack and Slash": 25,
 
-  // RPG & Strategy group
-  RPG: 12,
-  Strategy: 15,
-  MOBA: 36,
+  // Strategy group
   Tactical: 24,
+  Strategy: 15,
+  "Turn-based strategy(TBS)": 16,
+  "Real Time Strategy": 11,
 
-  // Shooter & Fighting group
-  Shooter: 5,
-  "First-Person Shooter": 5,
-  "Battle Royale": 5,
-  Fighting: 6,
-
-  // Puzzle & Casual group
+  // Thoughtful group
   Puzzle: 9,
-  "Board Game": 26,
-  "Card Game": 16,
+  "Quiz/Trivia": 26,
+  "Point-and-Click": 2,
+  "Visual Novel": 34,
+
+  // Competitive group
+  Fighting: 4,
   Racing: 10,
-  Platform: 8,
-  Casual: 36,
+  Sport: 14,
+  MOBA: 36,
 };
 
 // Function to place bias on indie games
