@@ -195,10 +195,20 @@ function displayResults(games) {
 }
 
 // Start quiz
+// Start quiz or load results when the page loads
 document.addEventListener("DOMContentLoaded", () => {
-  if (quizQuestion && quizForm) displayQuestion();
-  const resultsContainer = document.querySelector(".results_row");
-  if (resultsContainer) {
+  // Check if we're on the quiz page
+  const quizQuestion = document.querySelector("#quiz-question");
+  const quizForm = document.querySelector("#quiz-form");
+
+  if (quizQuestion && quizForm) {
+    displayQuestion();
+    setupQuizEventListeners();
+  }
+
+  // Check if we're on the results page
+  const finalResults = document.querySelector(".results_row");
+  if (finalResults) {
     loadQuizResults();
   }
 });
