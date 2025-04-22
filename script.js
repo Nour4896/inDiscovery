@@ -56,6 +56,13 @@ let currentQuestionIndex = 0;
 const userAnswers = {};
 
 function displayQuestion() {
+  const quizQuestion = document.querySelector("#quiz-question");
+  const quizForm = document.querySelector("#quiz-form");
+  const prevBtn = document.querySelector("#prev-btn");
+  const nextBtn = document.querySelector("#next-btn");
+
+  if (!quizQuestion || !quizForm || !prevBtn || !nextBtn) return;
+
   const currentQuestion = quizQuestions[currentQuestionIndex];
   quizQuestion.textContent = currentQuestion.question;
 
@@ -90,32 +97,44 @@ function displayQuestion() {
     currentQuestionIndex === quizQuestions.length - 1 ? "Submit" : "Next";
 }
 
-// Prev and Next button handlers
-nextBtn.addEventListener("click", () => {
-  const currentQuestion = quizQuestions[currentQuestionIndex];
-  const selected = quizForm.querySelector(
-    `input[name="${currentQuestion.name}"]:checked`
-  );
+function setupQuizEventListeners() {
+  const prevBtn = document.querySelector("#prev-btn");
+  const nextBtn = document.querySelector("#next-btn");
 
-  if (!selected) {
-    alert("Please select an option before proceeding.");
-    return;
-  }
+  if (!prevBtn || !nextBtn) return;
 
-  userAnswers[currentQuestion.name] = selected.value;
+  // Next button handler
+  nextBtn.addEventListener("click", () => {
+    const quizForm = document.querySelector("#quiz-form");
+    const currentQuestion = quizQuestions[currentQuestionIndex];
+    const selected = quizForm.querySelector(
+      `input[name="${currentQuestion.name}"]:checked`
+    );
 
-  if (currentQuestionIndex < quizQuestions.length - 1) {
-    currentQuestionIndex++;
-    displayQuestion();
-  }
-});
+    if (!selected) {
+      alert("Please select an option before proceeding.");
+      return;
+    }
 
-prevBtn.addEventListener("click", () => {
-  if (currentQuestionIndex > 0) {
-    currentQuestionIndex--;
-    displayQuestion();
-  }
-});
+    userAnswers[currentQuestion.name] = selected.value;
+
+    if (currentQuestionIndex < quizQuestions.length - 1) {
+      currentQuestionIndex++;
+      displayQuestion();
+    } else {
+      // Submit the quiz when on the last question
+      submitQuiz();
+    }
+  });
+
+  // Previous button handler
+  prevBtn.addEventListener("click", () => {
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      displayQuestion();
+    }
+  });
+}
 
 function updateGenreOptions(vibe) {
   // Update the genre options based on the selected vibe
