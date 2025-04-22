@@ -16,7 +16,7 @@ const quizQuestions = [
   },
   {
     question: "What genre would you like?",
-    options: ["RPG", "Platformer", "Puzzle", "Shooter"],
+    options: [],
     name: "question3",
   },
   {
@@ -40,6 +40,21 @@ function displayQuestion() {
   
   // retrieve the selected answer for current question from saved quiz answers
   const selectedAnswer = quizAnswers[currentQuestion.name];
+
+  // dynamically updates question 3 options based on question 2's answer
+  if (currentQuestionIndex === 2) {
+    const selectedVibe = quizAnswers["question2"]; 
+
+    if (selectedVibe === "Exciting") {
+        quizQuestions[2].options = excitingGenres;
+    } else if (selectedVibe === "Strategic") {
+        quizQuestions[2].options = strategicGenres;
+    } else if (selectedVibe === "Thoughtful") {
+        quizQuestions[2].options = thoughtfulGenres;
+    } else {
+        quizQuestions[2].options = competitiveGenres;
+    } 
+  }
 
   quizForm.innerHTML = `
     ${currentQuestion.options
