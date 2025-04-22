@@ -32,10 +32,14 @@ const prevBtn = document.querySelector("#prev-btn");
 const nextBtn = document.querySelector("#next-btn");
 
 let currentQuestionIndex = 0;
+let quizAnswers = {}
 
 function displayQuestion() {
   const currentQuestion = quizQuestions[currentQuestionIndex];
   quizQuestion.textContent = currentQuestion.question;
+  
+  // retrieve the selected answer for current question from saved quiz answers
+  const selectedAnswer = quizAnswers[currentQuestion.name];
 
   quizForm.innerHTML = `
     ${currentQuestion.options
@@ -49,6 +53,9 @@ function displayQuestion() {
 
   // disables the "Previous" button when on the first question
   prevBtn.disabled = currentQuestionIndex === 0;
+  
+  //disables the "Next" button if an answer is not selected
+  nextBtn.disabled = !selectedAnswer;
 }
 
 nextBtn.addEventListener("click", () => {
