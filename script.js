@@ -75,6 +75,11 @@ function displayQuestion() {
   document.querySelectorAll(`input[name="${currentQuestion.name}"]`).forEach(input => {
     input.addEventListener("change", e => {
         quizAnswers[currentQuestion.name] = e.target.value;
+        
+        if (currentQuestion.name === "question2") {
+            delete quizAnswers["question3"];
+        }
+
         saveQuizAnswer(); 
         nextBtn.disabled = false;
     });
