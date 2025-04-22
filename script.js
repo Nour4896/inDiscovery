@@ -20,8 +20,8 @@ const quizQuestions = [
     name: "question3",
   },
   {
-    question: "Who are you playing with?",
-    options: ["Single Player", "Online Co-Op", "Couch Co-Op", "Multiplayer"],
+    question: "Are you playing alone or solo?",
+    options: ["Single Player", "Multiplayer"],
     name: "question4",
   },
 ];
@@ -72,6 +72,11 @@ function displayQuestion() {
   //disables the "Next" button if an answer is not selected
   nextBtn.disabled = !selectedAnswer;
 
+  if (currentQuestionIndex === quizQuestions.length - 1) {
+    nextBtn.textContent = "Submit"
+    nextBtn.style.backgroundColor = "#8e54e9"
+  }
+
   document.querySelectorAll(`input[name="${currentQuestion.name}"]`).forEach(input => {
     input.addEventListener("change", e => {
         quizAnswers[currentQuestion.name] = e.target.value;
@@ -103,6 +108,8 @@ nextBtn.addEventListener("click", () => {
   if (currentQuestionIndex < quizQuestions.length - 1) {
     currentQuestionIndex++;
     displayQuestion();
+  } else if (currentQuestionIndex === quizQuestions.length - 1) {
+    document.getElementById("submit").href = "quizResults.html"
   }
 });
 
@@ -111,6 +118,11 @@ prevBtn.addEventListener("click", () => {
   if (currentQuestionIndex > 0) {
     currentQuestionIndex--;
     displayQuestion();
+  }
+
+  if (currentQuestionIndex != quizQuestions.length - 1) {
+    nextBtn.style.backgroundColor = "#4776e6"
+    nextBtn.textContent = "Next"
   }
 });
 
