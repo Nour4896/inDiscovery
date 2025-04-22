@@ -1,5 +1,5 @@
 const excitingGenres = [
-  "Role-Playing(RPG)",
+  "Role-Playing (RPG)",
   "Shooter",
   "Platform",
   "Hack and Slash",
@@ -7,7 +7,7 @@ const excitingGenres = [
 const strategicGenres = [
   "Tactical",
   "Strategy",
-  "Turn-based strategy(TBS)",
+  "Turn-based strategy (TBS)",
   "Real Time Strategy",
 ];
 const thoughtfulGenres = [
@@ -37,7 +37,7 @@ const quizQuestions = [
   },
   {
     question: "What genre would you like?",
-    options: [], // Will be populated based on vibe selection
+    options: [],
     name: "genre",
   },
   {
@@ -53,27 +53,57 @@ const prevBtn = document.querySelector("#prev-btn");
 const nextBtn = document.querySelector("#next-btn");
 
 let currentQuestionIndex = 0;
+const userAnswers = {};
 
 function displayQuestion() {
   const currentQuestion = quizQuestions[currentQuestionIndex];
   quizQuestion.textContent = currentQuestion.question;
 
-  quizForm.innerHTML = `
-    ${currentQuestion.options
-      .map(
-        (option) => `
-      <input type="radio" id="" name="${currentQuestion.name}" value="${option}" />
-      <label for="">${option}</label>`
-      )
-      .join("")}
-    `;
+  // Update genre options if needed
+  if (currentQuestion.name === "genre" && userAnswers.vibe) {
+    currentQuestion.options =
+      {
+        Exciting: excitingGenres,
+        Strategic: strategicGenres,
+        Thoughtful: thoughtfulGenres,
+        Competitive: competitiveGenres,
+      }[userAnswers.vibe] || [];
+  }
 
-  // disables the "Previous" button when on the first question
+  // Generate radio buttons
+  quizForm.innerHTML = currentQuestion.options
+    .map(
+      (option, index) => `
+    <div class="option">
+      <input type="radio" id="option-${index}" 
+             name="${currentQuestion.name}" 
+             value="${option}"
+             ${userAnswers[currentQuestion.name] === option ? "checked" : ""}>
+      <label for="option-${index}">${option}</label>
+    </div>
+  `
+    )
+    .join("");
+
   prevBtn.disabled = currentQuestionIndex === 0;
+  nextBtn.textContent =
+    currentQuestionIndex === quizQuestions.length - 1 ? "Submit" : "Next";
 }
 
+// Prev and Next button handlers
 nextBtn.addEventListener("click", () => {
-  // checks if the current question is not the last in the quiz
+  const currentQuestion = quizQuestions[currentQuestionIndex];
+  const selected = quizForm.querySelector(
+    `input[name="${currentQuestion.name}"]:checked`
+  );
+
+  if (!selected) {
+    alert("Please select an option before proceeding.");
+    return;
+  }
+
+  userAnswers[currentQuestion.name] = selected.value;
+
   if (currentQuestionIndex < quizQuestions.length - 1) {
     currentQuestionIndex++;
     displayQuestion();
@@ -81,14 +111,11 @@ nextBtn.addEventListener("click", () => {
 });
 
 prevBtn.addEventListener("click", () => {
-  // checks that the current question is not the first in the quiz
   if (currentQuestionIndex > 0) {
     currentQuestionIndex--;
     displayQuestion();
   }
 });
-
-document.addEventListener("DOMContentLoaded", displayQuestion);
 
 function updateGenreOptions(vibe) {
   // Update the genre options based on the selected vibe
@@ -112,3 +139,8 @@ function updateGenreOptions(vibe) {
     }
   }
 }
+
+// Start quiz
+document.addEventListener("DOMContentLoaded", () => {
+  if (quizQuestion && quizForm) displayQuestion();
+});
