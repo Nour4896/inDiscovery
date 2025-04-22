@@ -45,7 +45,7 @@ function displayQuestion() {
     ${currentQuestion.options
       .map(
         (option) => `
-      <input type="radio" id="" name="${currentQuestion.name}" value="${option}" />
+      <input type="radio" id="" name="${currentQuestion.name}" value="${option}" ${selectedAnswer === option ? "checked" : ""} />
       <label for="">${option}</label>`
       )
       .join("")}
@@ -70,6 +70,14 @@ function saveQuizAnswer() {
     localStorage.setItem("quizAnswers", JSON.stringify(quizAnswers));
 }
 
+function loadQuizAnswers() {
+    const savedAnswers = localStorage.getItem("quizAnswers");
+  
+    if (savedAnswers) {
+        quizAnswers = JSON.parse(savedAnswers);
+    }
+}
+
 nextBtn.addEventListener("click", () => {
   // checks if the current question is not the last in the quiz
   if (currentQuestionIndex < quizQuestions.length - 1) {
@@ -86,6 +94,7 @@ prevBtn.addEventListener("click", () => {
   }
 });
 
-
-
-document.addEventListener("DOMContentLoaded", displayQuestion);
+document.addEventListener("DOMContentLoaded", () => {
+    loadQuizAnswers()
+    displayQuestion()
+});
