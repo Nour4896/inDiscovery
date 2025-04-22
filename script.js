@@ -89,3 +89,26 @@ prevBtn.addEventListener("click", () => {
 });
 
 document.addEventListener("DOMContentLoaded", displayQuestion);
+
+function updateGenreOptions(vibe) {
+  // Update the genre options based on the selected vibe
+  const genreQuestion = quizQuestions.find((q) => q.name === "genre");
+  if (genreQuestion) {
+    switch (vibe) {
+      case "Exciting":
+        genreQuestion.options = excitingGenres;
+        break;
+      case "Strategic":
+        genreQuestion.options = strategicGenres;
+        break;
+      case "Thoughtful":
+        genreQuestion.options = thoughtfulGenres;
+        break;
+      case "Competitive":
+        genreQuestion.options = competitiveGenres;
+        break;
+      default:
+        genreQuestion.options = [];
+    }
+  }
+}
