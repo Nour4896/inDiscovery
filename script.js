@@ -45,8 +45,8 @@ function displayQuestion() {
     ${currentQuestion.options
       .map(
         (option) => `
-      <input type="radio" id="" name="${currentQuestion.name}" value="${option}" ${selectedAnswer === option ? "checked" : ""} />
-      <label for="">${option}</label>`
+      <input type="radio" id="${option}" name="${currentQuestion.name}" value="${option}" ${selectedAnswer === option ? "checked" : ""} />
+      <label for="${option}">${option}</label>`
       )
       .join("")}
     `;
