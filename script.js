@@ -1,11 +1,21 @@
 const excitingGenres = [
-  "Role-Playing",
+  "Role-Playing(RPG)",
   "Shooter",
-  "Platformer",
+  "Platform",
   "Hack and Slash",
 ];
-const strategicGenres = ["Tactical", "Turn-Based", "Strategy", "RTS"];
-const thoughtfulGenres = ["Puzzle", "Quiz", "Point and Click", "Visual Novel"];
+const strategicGenres = [
+  "Tactical",
+  "Strategy",
+  "Turn-based strategy(TBS)",
+  "Real Time Strategy",
+];
+const thoughtfulGenres = [
+  "Puzzle",
+  "Quiz/Trivia",
+  "Point-and-Click",
+  "Visual Novel",
+];
 const competitiveGenres = ["Fighting", "Racing", "Sport", "MOBA"];
 
 const quizQuestions = [
