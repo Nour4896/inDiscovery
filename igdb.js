@@ -60,7 +60,7 @@ const genreIds = {
 
 // Function to place bias on indie games
 function createIndieQuery() {
-  return `& (genres = (${INDIE_GENRE_ID}) | (rating_count < 500 & total_rating > 75))`;
+  return `& (genres = (${INDIE_GENRE_ID}) | (rating_count < 500 & total_rating > 70))`;
 }
 
 // Get games based on platform selection
@@ -82,7 +82,7 @@ async function getGamesByPlatform(platformName) {
       `fields name, platforms.name, genres.name, total_rating, summary, cover.url;
        where ${platformQuery} ${indieQuery} & total_rating != null;
        sort total_rating desc;
-       limit 30;`,
+       limit 15;`,
       {
         headers: {
           "Client-ID": IGDB_CONFIG.client_id,
@@ -129,7 +129,7 @@ async function getGamesByGenreGroup(platformName, genreGroupName) {
       `fields name, genres.name, platforms.name, total_rating, summary, cover.url;
        where ${platformQuery} & genres = (${genreGroupIds.join()}) ${indieQuery} & total_rating != null;
        sort total_rating desc;
-       limit 30;`,
+       limit 15;`,
       {
         headers: {
           "Client-ID": IGDB_CONFIG.client_id,
@@ -176,7 +176,7 @@ async function getGamesBySpecificGenre(platformName, genreName) {
       `fields name, genres.name, platforms.name, total_rating, summary, cover.url;
        where ${platformQuery} & genres = (${genreId}) ${indieQuery} & total_rating != null;
        sort total_rating desc;
-       limit 30;`,
+       limit 15;`,
       {
         headers: {
           "Client-ID": IGDB_CONFIG.client_id,
@@ -232,7 +232,7 @@ async function getGamesByMultiplayerPreference(
       `fields name, genres.name, platforms.name, total_rating, summary, cover.url, multiplayer_modes.*;
        where ${platformQuery} & genres = (${genreId}) ${multiplayerQuery} ${indieQuery} & total_rating != null;
        sort total_rating desc;
-       limit 30;`,
+       limit 15;`,
       {
         headers: {
           "Client-ID": IGDB_CONFIG.client_id,
@@ -320,7 +320,7 @@ async function testRandomizer() {
   const game = await getRandomIndieGame();
   console.log("Random Indie Game:", game);
 }
-testRandomizer();
+// testRandomizer();
 
 // Test function to check the indie bias in results
 async function testIndieGameBias(platformName = "PlayStation 5") {
@@ -332,7 +332,7 @@ async function testIndieGameBias(platformName = "PlayStation 5") {
       `fields name, genres.name, platforms.name, total_rating, involved_companies.company.name;
        where platforms = (${platformIds[platformName]}) ${indieQuery} & total_rating != null;
        sort total_rating desc;
-       limit 20;`,
+       limit 15;`,
       {
         headers: {
           "Client-ID": IGDB_CONFIG.client_id,
