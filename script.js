@@ -230,6 +230,19 @@ function displayRandomGame(game) {
     randomizerDescription.textContent = game.summary;
   }
 }
+
+// Function to fetch and display random game
+async function fetchRandomGame() {
+  try {
+    const response = await fetch("/api/random-game");
+    const game = await response.json();
+    displayRandomGame(game);
+  } catch (error) {
+    console.error("Error fetching random game:", error);
+    alert("Failed to get a random game. Please try again.");
+  }
+}
+
 // Start quiz or load results when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   // Check if we're on the quiz page
