@@ -1,28 +1,51 @@
-const excitingGenres = ["Role-Playing", "Shooter", "Platformer", "Hack and Slash"]
-const strategicGenres = ["Tactical", "Turn-Based", "Strategy", "RTS"]
-const thoughtfulGenres = ["Puzzle", "Quiz", "Point and Click", "Visual Novel"]
-const competitiveGenres = ["Fighting", "Racing", "Sport", "MOBA"]
+const excitingGenres = [
+  "Role-Playing",
+  "Shooter",
+  "Platform",
+  "Hack and Slash",
+];
+const strategicGenres = [
+  "Tactical",
+  "Strategy",
+  "Turn-based strategy",
+  "Real Time Strategy",
+];
+const thoughtfulGenres = [
+  "Puzzle",
+  "Quiz/Trivia",
+  "Point-and-Click",
+  "Visual Novel",
+];
+const competitiveGenres = ["Fighting", "Racing", "Sport", "MOBA"];
 
 const quizQuestions = [
   {
     question: "What system are you playing on?",
-    options: ["Nintendo Switch", "PC", "PlayStation 5", "Xbox Series X"],
-    name: "question1",
+    options: [
+      "Nintendo Switch",
+      "PC",
+      "PlayStation 5",
+      "Xbox Series X",
+      "Mobile",
+    ],
+    name: "platform",
   },
   {
     question: "What vibe of game are you in the mood for?",
     options: ["Exciting", "Strategic", "Thoughtful", "Competitive"],
-    name: "question2",
+    name: "vibe",
   },
   {
     question: "What genre would you like?",
-    options: [],
-    name: "question3",
+
+    options: [], // Will be populated based on vibe selection
+    name: "genre",
   },
   {
-    question: "Are you playing alone or solo?",
-    options: ["Single Player", "Multiplayer"],
-    name: "question4",
+    question: "Are you looking for a solo or multiplayer experience?",
+    options: ["Solo", "Multiplayer"],
+    name: "multiplayerMode",
+
   },
 ];
 
@@ -35,6 +58,13 @@ let currentQuestionIndex = 0;
 let quizAnswers = {}
 
 function displayQuestion() {
+  const quizQuestion = document.querySelector("#quiz-question");
+  const quizForm = document.querySelector("#quiz-form");
+  const prevBtn = document.querySelector("#prev-btn");
+  const nextBtn = document.querySelector("#next-btn");
+
+  if (!quizQuestion || !quizForm || !prevBtn || !nextBtn) return;
+
   const currentQuestion = quizQuestions[currentQuestionIndex];
   quizQuestion.textContent = currentQuestion.question;
   
@@ -56,77 +86,214 @@ function displayQuestion() {
     } 
   }
 
-  quizForm.innerHTML = `
-    ${currentQuestion.options
-      .map(
-        (option) => `
-      <input type="radio" id="${option}" name="${currentQuestion.name}" value="${option}" ${selectedAnswer === option ? "checked" : ""} />
-      <label for="${option}">${option}</label>`
-      )
-      .join("")}
-    `;
-
-  // disables the "Previous" button when on the first question
-  prevBtn.disabled = currentQuestionIndex === 0;
-  
-  //disables the "Next" button if an answer is not selected
-  nextBtn.disabled = !selectedAnswer;
-
-  if (currentQuestionIndex === quizQuestions.length - 1) {
-    nextBtn.textContent = "Submit"
-    nextBtn.style.backgroundColor = "#8e54e9"
+  // Update genre options if needed
+  if (currentQuestion.name === "genre" && userAnswers.vibe) {
+    currentQuestion.options =
+      {
+        Exciting: excitingGenres,
+        Strategic: strategicGenres,
+        Thoughtful: thoughtfulGenres,
+        Competitive: competitiveGenres,
+      }[userAnswers.vibe] || [];
   }
 
-  document.querySelectorAll(`input[name="${currentQuestion.name}"]`).forEach(input => {
-    input.addEventListener("change", e => {
-        quizAnswers[currentQuestion.name] = e.target.value;
-        
-        if (currentQuestion.name === "question2") {
-            delete quizAnswers["question3"];
-        }
+  // Generate radio buttons
+  quizForm.innerHTML = currentQuestion.options
+    .map(
+      (option, index) => `
+    <div class="option">
+      <input type="radio" id="option-${index}" 
+             name="${currentQuestion.name}" 
+             value="${option}"
+             ${userAnswers[currentQuestion.name] === option ? "checked" : ""}>
+      <label for="option-${index}">${option}</label>
+    </div>
+  `
+    )
+    .join("");
 
-        saveQuizAnswer(); 
-        nextBtn.disabled = false;
-    });
+  prevBtn.disabled = currentQuestionIndex === 0;
+
+  nextBtn.textContent =
+    currentQuestionIndex === quizQuestions.length - 1 ? "Submit" : "Next";
+}
+
+function setupQuizEventListeners() {
+  const prevBtn = document.querySelector("#prev-btn");
+  const nextBtn = document.querySelector("#next-btn");
+
+  if (!prevBtn || !nextBtn) return;
+
+  // Next button handler
+  nextBtn.addEventListener("click", () => {
+    const quizForm = document.querySelector("#quiz-form");
+    const currentQuestion = quizQuestions[currentQuestionIndex];
+    const selected = quizForm.querySelector(
+      `input[name="${currentQuestion.name}"]:checked`
+    );
+
+    if (!selected) {
+      alert("Please select an option before proceeding.");
+      return;
+    }
+
+    userAnswers[currentQuestion.name] = selected.value;
+
+    if (currentQuestionIndex < quizQuestions.length - 1) {
+      currentQuestionIndex++;
+      displayQuestion();
+    } else {
+      // Submit the quiz when on the last question
+      submitQuiz();
+    }
+  });
+
+  // Previous button handler
+  prevBtn.addEventListener("click", () => {
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      displayQuestion();
+    }
   });
 }
 
-function saveQuizAnswer() {
-    localStorage.setItem("quizAnswers", JSON.stringify(quizAnswers));
-}
-
-function loadQuizAnswers() {
-    const savedAnswers = localStorage.getItem("quizAnswers");
-  
-    if (savedAnswers) {
-        quizAnswers = JSON.parse(savedAnswers);
+function updateGenreOptions(vibe) {
+  // Update the genre options based on the selected vibe
+  const genreQuestion = quizQuestions.find((q) => q.name === "genre");
+  if (genreQuestion) {
+    switch (vibe) {
+      case "Exciting":
+        genreQuestion.options = excitingGenres;
+        break;
+      case "Strategic":
+        genreQuestion.options = strategicGenres;
+        break;
+      case "Thoughtful":
+        genreQuestion.options = thoughtfulGenres;
+        break;
+      case "Competitive":
+        genreQuestion.options = competitiveGenres;
+        break;
+      default:
+        genreQuestion.options = [];
     }
+  }
 }
 
-nextBtn.addEventListener("click", () => {
-  // checks if the current question is not the last in the quiz
-  if (currentQuestionIndex < quizQuestions.length - 1) {
-    currentQuestionIndex++;
-    displayQuestion();
-  } else if (currentQuestionIndex === quizQuestions.length - 1) {
-    document.getElementById("submit").href = "quizResults.html"
-  }
-});
+function submitQuiz() {
+  // Store the answers in session storage
+  sessionStorage.setItem("quizAnswers", JSON.stringify(userAnswers));
+  window.location.href = "quizResults.html";
+}
 
-prevBtn.addEventListener("click", () => {
-  // checks that the current question is not the first in the quiz
-  if (currentQuestionIndex > 0) {
-    currentQuestionIndex--;
-    displayQuestion();
+async function loadQuizResults() {
+  const answers = JSON.parse(sessionStorage.getItem("quizAnswers"));
+  if (!answers) {
+    alert("No quiz answers found. Please take the quiz first.");
+    window.location.href = "quiz.html";
+    return;
   }
 
-  if (currentQuestionIndex != quizQuestions.length - 1) {
-    nextBtn.style.backgroundColor = "#4776e6"
-    nextBtn.textContent = "Next"
-  }
-});
+  try {
+    const response = await fetch("/api/quiz-results", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(answers),
+    });
 
+    const games = await response.json();
+    displayResults(games);
+  } catch (error) {
+    console.error("Error fetching quiz results:", error);
+    alert("Failed to get game recomendations. Please try again.");
+  }
+}
+
+function displayResults(games) {
+  // Get results
+  const gameResults = document.querySelectorAll(".result");
+
+  // Display upto 9 games or however many games populate
+  games.slice(0, gameResults.length).forEach((game, index) => {
+    const games = gameResults[index];
+
+    games.innerHTML = `
+      <div class="game-card">
+        <h3 class="game-title">${game.name}</h3>
+        ${
+          game.cover
+            ? `<img src="${game.cover}" class="game-cover" alt="${game.name} cover">`
+            : ""
+        }
+        <p class="game-rating">Rating: ${Math.round(game.total_rating)}/100</p>
+        <p class="game-summary">${game.summary}</p>
+      </div>
+    `;
+  });
+}
+// Function to display random game
+function displayRandomGame(game) {
+  const randomizerTitle = document.querySelector(".random_title");
+  const randomizerCover = document.querySelector(".game_cover");
+  const randomizerDescription = document.querySelector(".description");
+
+  if (randomizerTitle) {
+    randomizerTitle.textContent = game.name;
+  }
+
+  if (randomizerCover && game.cover) {
+    randomizerCover.src = game.cover;
+  }
+
+  if (randomizerDescription) {
+    randomizerDescription.textContent = game.summary;
+  }
+}
+
+// Function to fetch and display random game
+async function fetchRandomGame() {
+  try {
+    const response = await fetch("/api/random-game");
+    const game = await response.json();
+    displayRandomGame(game);
+  } catch (error) {
+    console.error("Error fetching random game:", error);
+    alert("Failed to get a random game. Please try again.");
+  }
+}
+
+// Function to set up randomizer event listener
+function setupRandomizerEventListener() {
+  const randomizerButton = document.querySelector(".randomizer");
+
+  if (randomizerButton) {
+    randomizerButton.addEventListener("click", fetchRandomGame);
+  }
+}
+
+// Start quiz or load results when the page loads
 document.addEventListener("DOMContentLoaded", () => {
-    loadQuizAnswers()
-    displayQuestion()
+  // Check if we're on the quiz page
+  const quizQuestion = document.querySelector("#quiz-question");
+  const quizForm = document.querySelector("#quiz-form");
+
+  if (quizQuestion && quizForm) {
+    displayQuestion();
+    setupQuizEventListeners();
+  }
+
+  // Check if we're on the results page
+  const finalResults = document.querySelector(".results_row");
+  if (finalResults) {
+    loadQuizResults();
+  }
+  // Check if we're on the randomizer page
+  const randomizerButton = document.querySelector(".randomizer");
+  if (randomizerButton) {
+    setupRandomizerEventListener();
+    // Load an initial random game when the page loads
+    fetchRandomGame();
+  }
 });
