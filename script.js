@@ -37,7 +37,6 @@ const quizQuestions = [
   },
   {
     question: "What genre would you like?",
-
     options: [], // Will be populated based on vibe selection
     name: "genre",
   },
@@ -45,7 +44,6 @@ const quizQuestions = [
     question: "Are you looking for a solo or multiplayer experience?",
     options: ["Solo", "Multiplayer"],
     name: "multiplayerMode",
-
   },
 ];
 
@@ -55,7 +53,7 @@ const prevBtn = document.querySelector("#prev-btn");
 const nextBtn = document.querySelector("#next-btn");
 
 let currentQuestionIndex = 0;
-let quizAnswers = {}
+const userAnswers = {};
 
 function displayQuestion() {
   const quizQuestion = document.querySelector("#quiz-question");
@@ -67,24 +65,6 @@ function displayQuestion() {
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   quizQuestion.textContent = currentQuestion.question;
-  
-  // retrieve the selected answer for current question from saved quiz answers
-  const selectedAnswer = quizAnswers[currentQuestion.name];
-
-  // dynamically updates question 3 options based on question 2's answer
-  if (currentQuestionIndex === 2) {
-    const selectedVibe = quizAnswers["question2"]; 
-
-    if (selectedVibe === "Exciting") {
-        quizQuestions[2].options = excitingGenres;
-    } else if (selectedVibe === "Strategic") {
-        quizQuestions[2].options = strategicGenres;
-    } else if (selectedVibe === "Thoughtful") {
-        quizQuestions[2].options = thoughtfulGenres;
-    } else {
-        quizQuestions[2].options = competitiveGenres;
-    } 
-  }
 
   // Update genre options if needed
   if (currentQuestion.name === "genre" && userAnswers.vibe) {
@@ -102,7 +82,7 @@ function displayQuestion() {
     .map(
       (option, index) => `
     <div class="option">
-      <input type="radio" id="option-${index}" 
+      <input type="radio" class="option" id="option-${index}" 
              name="${currentQuestion.name}" 
              value="${option}"
              ${userAnswers[currentQuestion.name] === option ? "checked" : ""}>
@@ -113,9 +93,10 @@ function displayQuestion() {
     .join("");
 
   prevBtn.disabled = currentQuestionIndex === 0;
-
   nextBtn.textContent =
     currentQuestionIndex === quizQuestions.length - 1 ? "Submit" : "Next";
+    nextBtn.style.backgroundColor =
+    currentQuestionIndex === quizQuestions.length - 1 ? "#8e54e9" : "#4776e6";
 }
 
 function setupQuizEventListeners() {
@@ -215,7 +196,7 @@ function displayResults(games) {
   // Get results
   const gameResults = document.querySelectorAll(".result");
 
-  // Display upto 9 games or however many games populate
+  // Display up to 9 games or however many games populate
   games.slice(0, gameResults.length).forEach((game, index) => {
     const games = gameResults[index];
 
@@ -228,7 +209,6 @@ function displayResults(games) {
             : ""
         }
         <p class="game-rating">Rating: ${Math.round(game.total_rating)}/100</p>
-        <p class="game-summary">${game.summary}</p>
       </div>
     `;
   });
