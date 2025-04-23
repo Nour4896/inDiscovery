@@ -243,6 +243,15 @@ async function fetchRandomGame() {
   }
 }
 
+// Function to set up randomizer event listener
+function setupRandomizerEventListener() {
+  const randomizerButton = document.querySelector(".randomizer");
+
+  if (randomizerButton) {
+    randomizerButton.addEventListener("click", fetchRandomGame);
+  }
+}
+
 // Start quiz or load results when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   // Check if we're on the quiz page
@@ -258,5 +267,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const finalResults = document.querySelector(".results_row");
   if (finalResults) {
     loadQuizResults();
+  }
+  // Check if we're on the randomizer page
+  const randomizerButton = document.querySelector(".randomizer");
+  if (randomizerButton) {
+    setupRandomizerEventListener();
+    // Load an initial random game when the page loads
+    fetchRandomGame();
   }
 });
