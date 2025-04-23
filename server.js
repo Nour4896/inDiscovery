@@ -45,6 +45,7 @@ app.post("/api/quiz-results", async (req, res) => {
   }
 });
 
+// API endpoint for random indie game randomizer
 app.get("/api/random-game", async (req, res) => {
   try {
     const randomGame = await igdbFunctions.getRandomIndieGame();

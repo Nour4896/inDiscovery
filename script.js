@@ -212,8 +212,24 @@ function displayResults(games) {
     `;
   });
 }
+// Function to display random game
+function displayRandomGame(game) {
+  const randomizerTitle = document.querySelector(".random_title");
+  const randomizerCover = document.querySelector(".game_cover");
+  const randomizerDescription = document.querySelector(".description");
 
-// Start quiz
+  if (randomizerTitle) {
+    randomizerTitle.textContent = game.name;
+  }
+
+  if (randomizerCover && game.cover) {
+    randomizerCover.src = game.cover;
+  }
+
+  if (randomizerDescription) {
+    randomizerDescription.textContent = game.summary;
+  }
+}
 // Start quiz or load results when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   // Check if we're on the quiz page
