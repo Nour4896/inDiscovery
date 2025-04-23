@@ -44,3 +44,14 @@ app.post("/api/quiz-results", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch game recommendations" });
   }
 });
+
+app.get("/api/random-game", async (req, res) => {
+  try {
+    const randomGame = await igdbFunctions.getRandomIndieGame();
+
+    res.json(randomGame);
+  } catch (error) {
+    console.error("Error getting random game:", error);
+    res.status(500).json({ error: "Failed to fetch random game" });
+  }
+});
