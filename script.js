@@ -37,6 +37,7 @@ const quizQuestions = [
   },
   {
     question: "What genre would you like?",
+
     options: [], // Will be populated based on vibe selection
     name: "genre",
   },
@@ -44,6 +45,7 @@ const quizQuestions = [
     question: "Are you looking for a solo or multiplayer experience?",
     options: ["Solo", "Multiplayer"],
     name: "multiplayerMode",
+
   },
 ];
 
@@ -53,7 +55,7 @@ const prevBtn = document.querySelector("#prev-btn");
 const nextBtn = document.querySelector("#next-btn");
 
 let currentQuestionIndex = 0;
-const userAnswers = {};
+let quizAnswers = {}
 
 function displayQuestion() {
   const quizQuestion = document.querySelector("#quiz-question");
@@ -65,6 +67,24 @@ function displayQuestion() {
 
   const currentQuestion = quizQuestions[currentQuestionIndex];
   quizQuestion.textContent = currentQuestion.question;
+  
+  // retrieve the selected answer for current question from saved quiz answers
+  const selectedAnswer = quizAnswers[currentQuestion.name];
+
+  // dynamically updates question 3 options based on question 2's answer
+  if (currentQuestionIndex === 2) {
+    const selectedVibe = quizAnswers["question2"]; 
+
+    if (selectedVibe === "Exciting") {
+        quizQuestions[2].options = excitingGenres;
+    } else if (selectedVibe === "Strategic") {
+        quizQuestions[2].options = strategicGenres;
+    } else if (selectedVibe === "Thoughtful") {
+        quizQuestions[2].options = thoughtfulGenres;
+    } else {
+        quizQuestions[2].options = competitiveGenres;
+    } 
+  }
 
   // Update genre options if needed
   if (currentQuestion.name === "genre" && userAnswers.vibe) {
@@ -93,6 +113,7 @@ function displayQuestion() {
     .join("");
 
   prevBtn.disabled = currentQuestionIndex === 0;
+
   nextBtn.textContent =
     currentQuestionIndex === quizQuestions.length - 1 ? "Submit" : "Next";
 }
