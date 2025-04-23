@@ -34,7 +34,7 @@ const genreGroups = {
 // Individual genre IDs
 const genreIds = {
   // Exciting group
-  "Role-Playing(RPG)": 12,
+  "Role-Playing": 12,
   Shooter: 5,
   Platform: 8,
   "Hack and Slash": 25,
@@ -42,7 +42,7 @@ const genreIds = {
   // Strategy group
   Tactical: 24,
   Strategy: 15,
-  "Turn-based strategy(TBS)": 16,
+  "Turn-based strategy": 16,
   "Real Time Strategy": 11,
 
   // Thoughtful group

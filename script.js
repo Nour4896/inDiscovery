@@ -1,5 +1,5 @@
 const excitingGenres = [
-  "Role-Playing (RPG)",
+  "Role-Playing",
   "Shooter",
   "Platform",
   "Hack and Slash",
@@ -7,7 +7,7 @@ const excitingGenres = [
 const strategicGenres = [
   "Tactical",
   "Strategy",
-  "Turn-based strategy (TBS)",
+  "Turn-based strategy",
   "Real Time Strategy",
 ];
 const thoughtfulGenres = [
